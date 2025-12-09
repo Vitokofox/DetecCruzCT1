@@ -1,0 +1,24 @@
+/* Reset y estilos base para GradingApp */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #f8f9fa;
+  color: #2c3e50;
+  line-height: 1.6;
+}
+
+#root {
+  width: 100%;
+  min-height: 100vh;
+}
+
+/* Variables CSS globales ya definidas en App.css */

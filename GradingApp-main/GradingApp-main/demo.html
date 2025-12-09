@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🪵 GradingApp - Demo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #8B4513, #D2691E);
+            color: #333;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(45deg, #8B4513, #A0522D);
+            color: white;
+            padding: 24px;
+            text-align: center;
+        }
+        
+        .title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+        
+        .subtitle {
+            opacity: 0.9;
+            font-size: 14px;
+        }
+        
+        .content {
+            padding: 24px;
+        }
+        
+        .status {
+            margin-bottom: 20px;
+        }
+        
+        .status-item {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            margin-bottom: 8px;
+            border-radius: 8px;
+            background: #f8f9fa;
+        }
+        
+        .status-ok {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .status-info {
+            background: #cce7f0;
+            color: #0c5460;
+        }
+        
+        .action-buttons {
+            display: grid;
+            gap: 12px;
+        }
+        
+        .btn {
+            padding: 16px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .btn-primary {
+            background: #8B4513;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #A0522D;
+            transform: translateY(-2px);
+        }
+        
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+        
+        .result {
+            margin-top: 20px;
+            padding: 16px;
+            border-radius: 8px;
+            background: #f8f9fa;
+            display: none;
+        }
+        
+        .result.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .result.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        pre {
+            background: #f8f9fa;
+            padding: 12px;
+            border-radius: 4px;
+            overflow-x: auto;
+            font-size: 12px;
+            margin-top: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="title">🪵 GradingApp</div>
+            <div class="subtitle">Sistema de Clasificación de Madera</div>
+        </div>
+        
+        <div class="content">
+            <div class="status">
+                <div class="status-item status-ok">
+                    <span>✅ Backend funcionando en http://127.0.0.1:8000</span>
+                </div>
+                <div class="status-item status-info">
+                    <span>📡 Conectado a Supabase</span>
+                </div>
+                <div class="status-item status-info">
+                    <span>🔧 Demo HTML - Prueba de conectividad</span>
+                </div>
+            </div>
+            
+            <div class="action-buttons">
+                <button class="btn btn-primary" onclick="testConnection()">
+                    🧪 Probar Conexión API
+                </button>
+                <button class="btn btn-secondary" onclick="listInspections()">
+                    📋 Listar Inspecciones
+                </button>
+                <button class="btn btn-secondary" onclick="openBackendDocs()">
+                    📚 Ver Documentación API
+                </button>
+            </div>
+            
+            <div id="result" class="result"></div>
+        </div>
+    </div>
+    
+    <script>
+        const API_BASE = 'http://127.0.0.1:8000';
+        
+        async function testConnection() {
+            showResult('Probando conexión...', 'info');
+            
+            try {
+                const response = await fetch(`${API_BASE}/health`);
+                const data = await response.json();
+                
+                if (response.ok) {
+                    showResult('✅ Conexión exitosa!\n\n' + JSON.stringify(data, null, 2), 'success');
+                } else {
+                    showResult('❌ Error en la respuesta: ' + response.status, 'error');
+                }
+            } catch (error) {
+                showResult('❌ Error de conexión: ' + error.message, 'error');
+            }
+        }
+        
+        async function listInspections() {
+            showResult('Obteniendo inspecciones...', 'info');
+            
+            try {
+                const response = await fetch(`${API_BASE}/api/v1/inspecciones`);
+                const data = await response.json();
+                
+                if (response.ok) {
+                    showResult('✅ Inspecciones obtenidas:\n\n' + JSON.stringify(data, null, 2), 'success');
+                } else {
+                    showResult('❌ Error obteniendo inspecciones: ' + response.status, 'error');
+                }
+            } catch (error) {
+                showResult('❌ Error de red: ' + error.message, 'error');
+            }
+        }
+        
+        function openBackendDocs() {
+            window.open(`${API_BASE}/docs`, '_blank');
+        }
+        
+        function showResult(message, type) {
+            const result = document.getElementById('result');
+            result.style.display = 'block';
+            result.className = 'result ' + type;
+            result.innerHTML = '<pre>' + message + '</pre>';
+        }
+        
+        // Test automático al cargar
+        window.onload = function() {
+            setTimeout(testConnection, 1000);
+        };
+    </script>
+</body>
+</html>

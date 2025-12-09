@@ -1,0 +1,15 @@
+########################################################
+# Requisitos para GradingApp Backend
+# Instalar usando: pip install -r requirements.txt
+# Versiones probadas y compatibles
+########################################################
+fastapi>=0.100.0          # Framework principal (Actualizado para Pydantic v2)
+uvicorn[standard]>=0.20.0 # Servidor ASGI
+sqlalchemy==1.4.48        # ORM para base de datos
+psycopg2==2.9.11          # Driver para PostgreSQL
+python-dotenv==1.0.0      # Manejo de variables de entorno
+pydantic>=2.0.0           # Validación de datos v2
+python-multipart==0.0.6   # Soporte para formularios y archivos
+supabase==2.25.0          # Cliente para Supabase
+httpx==0.28.1             # Cliente HTTP asíncrono
+websockets==15.0.1        # Requerido por Supabase Realtime
