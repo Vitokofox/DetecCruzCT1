@@ -1,1 +1,0 @@
-# Deteccion_Cruzamiento
