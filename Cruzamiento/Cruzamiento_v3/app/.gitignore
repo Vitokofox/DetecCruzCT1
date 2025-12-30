@@ -1,0 +1,24 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+env/
+
+# Build artifacts
+dist/
+build/
+*.spec
+
+# Application Data
+detecciones/
+grabaciones/
+logs/
+
+# IDE
+.vscode/
+.idea/
+
+# Temp
+*.tmp
+*.log

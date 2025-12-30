@@ -1,0 +1,8 @@
+PySide6
+opencv-python
+numpy
+requests
+pymodbus>=3.6.0
+ultralytics
+torch
+pyinstaller
